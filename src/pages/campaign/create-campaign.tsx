@@ -1,4 +1,7 @@
+import { CustomDatePicker } from "@/components/custom-ui";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 
 export default function CreateCampaign() {
@@ -23,11 +26,20 @@ export default function CreateCampaign() {
           placeholder="Please add a description to your campaign"
           className="min-h-[112px]"
           labelClass=""
-          isRequired
           error=""
         />
         <div className="grid md:grid-cols-2 gap-6 ">
-
+          <CustomDatePicker />
+          <CustomDatePicker />
+        </div>
+        <div className="flex items-center justify-between">
+          <Label
+            htmlFor="get-digest"
+            className="font-medium text-sm text-[var(--text-color2)]"
+          >
+            Want to receive daily digest about the campaign?
+          </Label>
+          <Switch id="get-digest" />
         </div>
       </form>
     </div>
