@@ -34,6 +34,7 @@ export default function SideBar() {
           {sidenavPath.map((path) => (
             <NavLink
               to={path.path}
+              key={path.name}
               className={({ isActive }) =>
                 cn([
                   "flex items-center py-2 gap-x-2 pl-5 text-sm font-semibold w-full rounded-tr rounded-br ",
