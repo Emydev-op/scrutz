@@ -1,10 +1,13 @@
 import { CustomDatePicker } from "@/components/custom-ui";
+import CustomTagInput from "@/components/custom-ui/custom-tag-input";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
+import { useState } from "react";
 
 export default function CreateCampaign() {
+  const [selected, setSelected] = useState(["papaya"]);
   return (
     <div className="px-10 py-6 ">
       <h2 className="text-xl font-bold text-[var(--pry-color)]">
@@ -40,6 +43,22 @@ export default function CreateCampaign() {
             Want to receive daily digest about the campaign?
           </Label>
           <Switch id="get-digest" />
+        </div>
+        <div className="w-full">
+          <CustomTagInput
+            id="linkedKeywords"
+            placeHolder="To add keywords, type your keyword and press enter"
+            value={selected}
+            onChange={setSelected}
+            isRequired
+            label="Linked Keywords"
+            error=""
+            classNames={{
+              input:
+                "!w-[100%] bg-transparent border-2 placeholder:text-sm placeholder:text-[var(--text-color3)] ",
+              tag: "!text-white !bg-[var(--pry-color)] ",
+            }}
+          />
         </div>
       </form>
     </div>
