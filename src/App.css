@@ -1,5 +1,6 @@
 .custom-scrollbar {
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .custom-scrollbar::-webkit-scrollbar {

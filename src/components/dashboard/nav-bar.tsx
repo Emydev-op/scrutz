@@ -47,6 +47,7 @@ export default function NavBar() {
       <div className=" px-16 flex h-full justify-between items-center">
         <div className="relative w-fit md:grow-0">
           <Input
+            id="search"
             type="search"
             placeholder="Search..."
             className="w-full !h-[44px] focus-visible:ring-0 rounded bg-transparent pl-[10px] md:w-[200px] lg:w-[320px]"

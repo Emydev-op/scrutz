@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 export default function RootLayout() {
   return (
     <>
-      <div className="w-screen h-screen flex bg-white">
+      <div className="w-dvw h-dvh absolute top-0 bottom-0 flex bg-white overflow-y-hidden">
         {/* Sidebar to dashboard layout */}
         <SideBar />
         <div className="bg-[--bg-color2] flex-1 flex flex-col">
