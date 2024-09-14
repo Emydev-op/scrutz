@@ -1,43 +1,102 @@
-"use client";
-
-import * as React from "react";
-import { CalendarIcon } from "@radix-ui/react-icons";
-import { format } from "date-fns";
-
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import DatePicker from "react-multi-date-picker";
+import "react-multi-date-picker/styles/layouts/mobile.css";
+import "react-multi-date-picker/styles/colors/teal.css";
+import { CalenderIcon } from "@/assets/icons";
 
-export function CustomDatePicker() {
-  const [date, setDate] = React.useState<Date>();
+interface CustomDateInputProps {
+  label?: string;
+  id: string;
+  name?: string;
+  labelClass?: string;
+  className?: string;
+  onOpenPickNewDate?: boolean;
+  isRequired?: boolean;
+  handleChange?: (arg: never) => void;
+  selected?: Date;
+  error?: string;
+  touched?: boolean;
+  disabled?: boolean;
+  portal?: boolean;
+  showOnlyMonth?: boolean;
+  iconClass?: string;
+  inputClass?: string;
+  placeholder?: string;
+  format?: string;
+  onBlur?: () => void;
+}
 
+export function CustomDatePicker({
+  label,
+  id,
+  name,
+  format,
+  labelClass,
+  iconClass,
+  onOpenPickNewDate = false,
+  isRequired,
+  handleChange,
+  selected,
+  error,
+  inputClass,
+  touched,
+  disabled,
+  showOnlyMonth = false,
+  placeholder,
+  portal = true,
+  onBlur,
+}: CustomDateInputProps) {
   return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button
-          variant={"outline"}
+    <div className="space-y-1" onBlur={onBlur}>
+      {label && (
+        <label
+          htmlFor={id}
           className={cn(
-            "w-full justify-start text-left font-normal",
-            !date && "text-muted-foreground"
+            "font-medium text-sm text-[var(--text-color2)]",
+            isRequired
+              ? "after:content-['*'] after:ml-0.5 after:text-red-500"
+              : "",
+            labelClass
           )}
         >
-          <CalendarIcon className="mr-2 h-4 w-4" />
-          {date ? format(date, "PPP") : <span>Pick a date</span>}
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-auto p-0" align="start">
-        <Calendar
-          mode="single"
-          selected={date}
-          onSelect={setDate}
-          initialFocus
+          {label}
+        </label>
+      )}
+      <div className="relative w-full">
+        <DatePicker
+          id={id}
+          name={name}
+          format={format ? format : "YYYY-MM-DD"}
+          placeholder={placeholder ? placeholder : "yyy/mm/dd"}
+          inputClass={cn(
+            "border rounded-[4px] bg-white px-3 py-[7px] border-[var(--text-color3)] text-sm w-full focus-visible:ring-1 focus-visible:ring-[var(--pry-color)] focus-visible:border-transparent focus:outline-none focus:border-[var(--primary-color)]",
+            inputClass,
+            error && touched && "border-red-500"
+          )}
+          containerClassName="w-full"
+          onOpenPickNewDate={onOpenPickNewDate}
+          onChange={handleChange}
+          value={selected}
+          // className={cn("green", className)}
+          className="teal"
+          disabled={disabled}
+          onlyMonthPicker={showOnlyMonth}
+          highlightToday={false}
+          portal={portal}
         />
-      </PopoverContent>
-    </Popover>
+        <img
+          src={CalenderIcon}
+          className={cn(
+            "absolute right-3 top-1/2  transform -translate-x-1/2 -translate-y-1/2 inline text-[var(--text-color3)]",
+            iconClass
+          )}
+        />
+      </div>
+      <span
+        className={cn("text-xs text-red-500 hidden", error && "block absolute")}
+      >
+        {error && touched && error}
+      </span>
+    </div>
   );
 }

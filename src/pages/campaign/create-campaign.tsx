@@ -23,7 +23,7 @@ export default function CreateCampaign() {
       <h2 className="text-xl font-bold text-[var(--pry-color)]">
         Create New Campaign
       </h2>
-      <div className="bg-white mt-4 pb-2.5 mb-10 max-w-[680px] space-y-4">
+      <div className="bg-white mt-4 pb-2.5 mb-10 max-w-[680px] space-y-6">
         <Input
           label="Campaign Name"
           id="campaignName"
@@ -42,8 +42,13 @@ export default function CreateCampaign() {
           error=""
         />
         <div className="grid md:grid-cols-2 gap-6 ">
-          <CustomDatePicker />
-          <CustomDatePicker />
+          <CustomDatePicker
+            id="startDate"
+            name="startDate"
+            isRequired
+            label="Start Date"
+          />
+          <CustomDatePicker id="endDate" name="endDate" label="End Date" />
         </div>
         <div className="flex items-center justify-between">
           <Label
@@ -66,7 +71,7 @@ export default function CreateCampaign() {
             classNames={{
               input:
                 "!w-[100%] bg-transparent border-2 placeholder:text-sm placeholder:text-[var(--text-color3)] ",
-              tag: "!text-white !bg-[var(--pry-color)] ",
+              tag: "!text-white !bg-[var(--pry-color)] text-[10px] !px-2.5 !py-1.5",
             }}
           />
         </div>

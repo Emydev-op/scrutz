@@ -49,7 +49,7 @@ export default function NavBar() {
           <Input
             id="search"
             type="search"
-            placeholder="Search..."
+            placeholder="Search for anything..."
             className="w-full !h-[44px] focus-visible:ring-0 rounded bg-transparent pl-[10px] md:w-[200px] lg:w-[320px]"
           />
           <Search className="absolute right-2.5 top-3.5 size-4 text-muted-foreground" />
