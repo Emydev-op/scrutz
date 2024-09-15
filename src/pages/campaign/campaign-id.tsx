@@ -1,4 +1,5 @@
 import { ArrowLeftIcon } from "@/assets/icons";
+import CustomTagInput from "@/components/custom-ui/custom-tag-input";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
@@ -34,19 +35,21 @@ export default function CampaignId() {
           value="Fidelity Bank"
         />
         <div className="flex gap-x-6 w-full">
-          <Input
-            label="Start Date"
-            disabled
-            type="text"
-            value="27/10/2022"
-          />{" "}
-          <Input
-            label="End Date"
-            disabled
-            type="text"
-            value="07/12/2024"
-          />
+          <Input label="Start Date" disabled type="text" value="27/10/2022" />{" "}
+          <Input label="End Date" disabled type="text" value="07/12/2024" />
         </div>
+        <CustomTagInput
+          id="linkedKeywords"
+          disabled
+          value={["papaya", "father", "samson"]}
+          label="Linked Keywords"
+          error=""
+          classNames={{
+            input:
+              "!w-[100%] bg-transparent !border-1 placeholder:text-sm placeholder:text-[var(--text-color3)] ",
+            tag: "!text-white !bg-[var(--pry-color)] text-[10px] !px-2.5 !py-1.5",
+          }}
+        />
       </section>
     </div>
   );

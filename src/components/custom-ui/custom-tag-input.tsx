@@ -7,13 +7,14 @@ type CustomTagInputProps = {
   labelClass?: string;
   label?: string;
   error?: string;
-  placeHolder: string;
+  placeHolder?: string;
   classNames?: {
     input?: string;
     tag?: string;
   };
   value: string[];
   onChange?: (tags: string[]) => void;
+  disabled?: boolean;
 };
 
 export default function CustomTagInput({
