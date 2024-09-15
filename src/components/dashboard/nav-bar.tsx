@@ -52,7 +52,7 @@ export default function NavBar() {
             placeholder="Search for anything..."
             className="w-full !h-[44px] focus-visible:ring-0 rounded bg-transparent pl-[10px] md:w-[200px] lg:w-[320px]"
           />
-          <Search className="absolute right-2.5 top-3.5 size-4 text-muted-foreground" />
+          <Search className="absolute right-2.5 top-1/2 transform -translate-x-1/2 -translate-y-1/2 cursor-pointer size-4 text-muted-foreground" />
         </div>
         <div className="flex items-center">
           <img src={BellIcon} alt="notification icon" />

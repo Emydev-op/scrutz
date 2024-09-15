@@ -1,4 +1,5 @@
 export { default as AvatarIcon } from "./avatar.svg";
+export { default as ArrowLeftIcon } from "./arrow-left.svg";
 export { default as BellIcon } from "./bell.svg";
 export { default as CalenderIcon } from "./calender.svg"; 
 export { default as ExportIcon } from "./export.svg"; 

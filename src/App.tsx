@@ -7,6 +7,7 @@ import AllCampaign from "./pages/campaign/all-campaign";
 import Settings from "./pages/settings/settings";
 import CreateCampaign from "./pages/campaign/create-campaign";
 import MarketIntelligence from "./pages/market/market-intelligence";
+import CampaignId from "./pages/campaign/campaign-id";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,11 @@ const router = createBrowserRouter([
             element: <AllCampaign />,
             index: true,
             id: "all",
+          },
+          {
+            element: <CampaignId />,
+            path: ":id",
+            id: "campaignId",
           },
           {
             element: <CreateCampaign />,

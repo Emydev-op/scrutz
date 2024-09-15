@@ -87,7 +87,7 @@ export function CustomDatePicker({
         <img
           src={CalenderIcon}
           className={cn(
-            "absolute right-3 top-1/2  transform -translate-x-1/2 -translate-y-1/2 inline text-[var(--text-color3)]",
+            "absolute right-3 top-1/2 transform -translate-x-1/2 -translate-y-1/2 inline text-[var(--text-color3)]",
             iconClass
           )}
         />

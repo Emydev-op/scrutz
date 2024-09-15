@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   isRequired?: boolean;
-  id: string;
+  id?: string;
   labelClass?: string;
   label?: string;
   error?: string;
@@ -17,7 +17,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     ref
   ) => {
     return (
-      <div className="space-y-1">
+      <div className="space-y-1 w-full">
         <label
           htmlFor={id}
           className={cn(
