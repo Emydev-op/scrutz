@@ -2,13 +2,20 @@ import useSWR, { mutate } from "swr";
 import useSWRMutation from "swr/mutation";
 import { axiosInstance, fetcher } from "./axios-instance";
 import { Payment } from "@/components/custom-ui/custom-table";
+import useLoadingStore from "./loadingStore";
 
 export const useFetchCampaigns = () => {
   const { data, error, isLoading, isValidating, mutate } = useSWR<Payment[]>(
     "/api/Campaign",
     fetcher
   );
-
+  const showLoading = useLoadingStore((state) => state.showLoading);
+  const hideLoading = useLoadingStore((state) => state.hideLoading);
+  if (isLoading) {
+    showLoading();
+  } else {
+    hideLoading();
+  }
   return {
     campaigns: data,
     isLoading: isLoading,

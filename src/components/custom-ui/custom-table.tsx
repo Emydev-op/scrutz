@@ -499,8 +499,7 @@ export function CustomTable({ data }: { data: Payment[] }) {
         </Pagination>
 
         <div className=" text-sm text-black ">
-          showing {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} results
+          showing 10 of {table.getFilteredRowModel().rows.length} results
         </div>
       </div>
     </div>
