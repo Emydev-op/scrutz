@@ -1,14 +1,13 @@
-import { z } from "zod";
+import * as Yup from "yup";
 
-// Zod schema for campaign form validation
-export const campaignSchema = z.object({
-  campaignName: z.string().min(1, { message: "Campaign name is required" }),
-  campaignDescription: z.string().optional(),
-  startDate: z.string().min(1, { message: "Start date is required" }),
-  endDate: z.string().optional(),
-  digestCampaign: z.boolean().optional(),
-  linkedKeywords: z
-    .array(z.string())
-    .min(1, { message: "At least one keyword is required" }),
-  dailyDigest: z.string().min(1, { message: "Select a frequency" }),
+export const campaignSchema = Yup.object().shape({
+  campaignName: Yup.string()
+    .min(1, { message: "Campaign name is too small" })
+    .required("Campaign name is required"),
+  campaignDescription: Yup.string(),
+  startDate: Yup.string().required("Start date is required"),
+  endDate: Yup.string(),
+  digestCampaign: Yup.boolean(),
+  linkedKeywords: Yup.array().min(1, "At least one keyword is required"),
+  dailyDigest: Yup.string().required("Select a frequency"),
 });

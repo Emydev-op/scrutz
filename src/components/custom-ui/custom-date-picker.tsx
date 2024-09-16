@@ -13,7 +13,7 @@ interface CustomDateInputProps {
   onOpenPickNewDate?: boolean;
   isRequired?: boolean;
   handleChange?: (arg: never) => void;
-  selected?: Date;
+  selected?: Date | string;
   error?: string;
   touched?: boolean;
   disabled?: boolean;
@@ -39,7 +39,6 @@ export function CustomDatePicker({
   selected,
   error,
   inputClass,
-  touched,
   disabled,
   showOnlyMonth = false,
   placeholder,
@@ -71,13 +70,12 @@ export function CustomDatePicker({
           inputClass={cn(
             "border rounded-[4px] bg-white px-3 py-[7px] border-[var(--text-color3)] text-sm w-full focus-visible:ring-1 focus-visible:ring-[var(--pry-color)] focus-visible:border-transparent focus:outline-none focus:border-[var(--primary-color)]",
             inputClass,
-            error && touched && "border-red-500"
+            error && "border-red-500"
           )}
           containerClassName="w-full"
           onOpenPickNewDate={onOpenPickNewDate}
           onChange={handleChange}
           value={selected}
-          // className={cn("green", className)}
           className="teal"
           disabled={disabled}
           onlyMonthPicker={showOnlyMonth}
@@ -93,9 +91,9 @@ export function CustomDatePicker({
         />
       </div>
       <span
-        className={cn("text-xs text-red-500 hidden", error && "block absolute")}
+        className={cn("text-xs ml-2 text-red-500 hidden", error && "block")}
       >
-        {error && touched && error}
+        {error}
       </span>
     </div>
   );

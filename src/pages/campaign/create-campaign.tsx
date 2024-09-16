@@ -10,10 +10,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { routes } from "@/utlis/routes";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import { campaignSchema } from "@/lib/schema";
+// import { formatDate } from "@/utlis/date-formater";
 
 export default function CreateCampaign() {
-  const [selected, setSelected] = useState(["papaya"]);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
   const dailyDigestOptions = [
     { label: "daily", value: "daily" },
@@ -21,9 +23,30 @@ export default function CreateCampaign() {
     { label: "monthly", value: "monthly" },
     { label: "quaterly", value: "quaterly" },
   ];
+
+  const formik = useFormik({
+    initialValues: {
+      campaignName: "",
+      campaignDescription: "",
+      startDate: "",
+      endDate: "",
+      digestCampaign: true,
+      linkedKeywords: [],
+      dailyDigest: "",
+    },
+    validationSchema: campaignSchema,
+    onSubmit: (values) => {
+      console.log(values, "result");
+      // setConfirmModal(true);
+    },
+  });
+  console.log(formik.values, "formik");
   return (
     <>
-      <div className="px-4 md:px-10 md:ml-5 py-6 ">
+      <form
+        onSubmit={formik.handleSubmit}
+        className="px-4 md:px-10 md:ml-5 py-6 "
+      >
         <h2 className="text-xl font-bold text-[var(--pry-color)]">
           Create New Campaign
         </h2>
@@ -33,26 +56,61 @@ export default function CreateCampaign() {
             id="campaignName"
             type="text"
             placeholder="e.g  The Future is now"
-            labelClass=""
             isRequired
-            error=""
+            value={formik?.values.campaignName}
+            onChange={formik?.handleChange}
+            error={
+              formik.errors.campaignName && formik.touched.campaignName
+                ? formik.errors.campaignName
+                : ""
+            }
           />
           <Textarea
             label="Campaign Description"
             id="campaignDescription"
             placeholder="Please add a description to your campaign"
             className="min-h-[112px]"
-            labelClass=""
-            error=""
+            value={formik?.values.campaignDescription}
+            onChange={formik?.handleChange}
+            error={
+              formik.errors.campaignDescription &&
+              formik.touched.campaignDescription
+                ? formik.errors.campaignDescription
+                : ""
+            }
           />
           <div className="grid md:grid-cols-2 gap-6 ">
             <CustomDatePicker
               id="startDate"
               name="startDate"
-              isRequired
               label="Start Date"
+              isRequired
+              format="YYYY/MM/DD"
+              selected={new Date(formik.values.startDate)}
+              handleChange={(date) => {
+                formik.setFieldValue("startDate", new Date(date));
+              }}
+              error={
+                formik.errors.startDate && formik.touched.startDate
+                  ? formik.errors.startDate
+                  : ""
+              }
             />
-            <CustomDatePicker id="endDate" name="endDate" label="End Date" />
+            <CustomDatePicker
+              id="endDate"
+              name="endDate"
+              label="End Date"
+              format="YYYY/MM/DD"
+              selected={new Date(formik.values.endDate)}
+              handleChange={(date) => {
+                formik.setFieldValue("endDate", new Date(date));
+              }}
+              error={
+                formik.errors.endDate && formik.touched.endDate
+                  ? formik.errors.endDate
+                  : ""
+              }
+            />
           </div>
           <div className="flex items-center justify-between">
             <Label
@@ -61,17 +119,25 @@ export default function CreateCampaign() {
             >
               Want to receive daily digest about the campaign?
             </Label>
-            <Switch id="get-digest" />
+            <Switch
+              id="digestCampaign"
+              checked={formik.values.digestCampaign}
+              onCheckedChange={(e) => formik.setFieldValue("digestCampaign", e)}
+            />
           </div>
           <div className="w-full">
             <CustomTagInput
               id="linkedKeywords"
               placeHolder="To add keywords, type your keyword and press enter"
-              value={selected}
-              onChange={setSelected}
+              value={formik.values.linkedKeywords}
+              onChange={(e) => formik.setFieldValue("linkedKeywords", e)}
               isRequired
               label="Linked Keywords"
-              error=""
+              error={
+                formik.errors.linkedKeywords && formik.touched.linkedKeywords
+                  ? formik.errors.linkedKeywords
+                  : ""
+              }
               classNames={{
                 input:
                   "!w-[100%] bg-transparent border-2 placeholder:text-sm placeholder:text-[var(--text-color3)] ",
@@ -99,13 +165,12 @@ export default function CreateCampaign() {
           </Link>
           <Button
             type="submit"
-            onClick={() => setConfirmModal(true)}
             className="font-semibold text-sm rounded w-[130px] md:w-[196px] h-10 hover:border-transparent"
           >
             Create Campaign
           </Button>
         </div>
-      </div>
+      </form>
       <SuccessModal
         show={confirmModal}
         title="Campaign Successfully Created!"
@@ -113,7 +178,7 @@ export default function CreateCampaign() {
         handleClose={() => setConfirmModal(false)}
         handleConfirm={() => {
           setConfirmModal(false);
-          navigate(routes.CAMPAIGN)
+          navigate(routes.CAMPAIGN);
         }}
       />
     </>

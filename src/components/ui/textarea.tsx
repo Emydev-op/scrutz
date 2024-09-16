@@ -28,6 +28,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           {label}
         </label>
         <textarea
+          name={id}
           className={cn(
             "flex min-h-[60px] w-full rounded-md border text-[var(--text-color2)] border-[var(--text-color3)] bg-transparent px-3 py-2 text-sm placeholder:text-[var(--text-color3)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--pry-color)] disabled:cursor-not-allowed disabled:opacity-50",
             error &&

@@ -6,7 +6,7 @@ type CustomTagInputProps = {
   id: string;
   labelClass?: string;
   label?: string;
-  error?: string;
+  error?: string | string[];
   placeHolder?: string;
   classNames?: {
     input?: string;

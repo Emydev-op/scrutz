@@ -8,13 +8,14 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { routes } from "@/utlis/routes";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function CampaignId() {
   const [cancelCampaignModal, setCancelCampaignModal] =
     useState<boolean>(false);
   const [confirmCampaignModal, setConfirmCampaignModal] =
     useState<boolean>(false);
+    const navigate = useNavigate()
   return (
     <div className="px-4 md:px-10 md:ml-5 py-6 ">
       <div className="inline-flex items-center group">
@@ -110,6 +111,7 @@ export default function CampaignId() {
         handleClose={() => setConfirmCampaignModal(false)}
         handleConfirm={() => {
           setConfirmCampaignModal(false);
+          navigate(routes.CAMPAIGN)
         }}
       />
     </div>
