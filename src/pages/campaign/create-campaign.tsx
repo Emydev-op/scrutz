@@ -9,10 +9,11 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { routes } from "@/utlis/routes";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function CreateCampaign() {
   const [selected, setSelected] = useState(["papaya"]);
+  const navigate = useNavigate()
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
   const dailyDigestOptions = [
     { label: "daily", value: "daily" },
@@ -99,7 +100,7 @@ export default function CreateCampaign() {
           <Button
             type="submit"
             onClick={() => setConfirmModal(true)}
-            className="font-semibold text-sm rounded w-[130px] md:w-[196px] h-10"
+            className="font-semibold text-sm rounded w-[130px] md:w-[196px] h-10 hover:border-transparent"
           >
             Create Campaign
           </Button>
@@ -112,6 +113,7 @@ export default function CreateCampaign() {
         handleClose={() => setConfirmModal(false)}
         handleConfirm={() => {
           setConfirmModal(false);
+          navigate(routes.CAMPAIGN)
         }}
       />
     </>

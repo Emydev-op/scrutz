@@ -26,7 +26,7 @@ export default function Overview() {
             className="w-[426px] h-[290px] mx-auto"
           />
           <p className="text-sm font-semibold">
-            No activity yet. Create anew campaign to get started
+            No activity yet. Create a new campaign to get started
           </p>
           <Link to={routes.ADD_CAMPAIGN} className="block w-fit mx-auto">
             <Button className="space-x-[10px] max-w-44 !py-[10px] w-full hover:border-transparent">
