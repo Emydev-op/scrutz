@@ -16,6 +16,8 @@ export interface SelectProps {
   placeholder?: string;
   label?: string;
   error?: string;
+  defaultValue?: string;
+  onValueChange?: (value: string) => void;
   className?: string;
   disabled?: boolean;
   option?: { label: string; value: string }[];
@@ -27,6 +29,8 @@ export default function CustomSelect({
   isRequired,
   label,
   option,
+  defaultValue,
+  onValueChange,
   placeholder,
   labelClass,
   error,
@@ -46,8 +50,12 @@ export default function CustomSelect({
       >
         {label}
       </label>
-      <Select>
-        <SelectTrigger className={cn("!ring-[var(--pry-color)]",className)} {...props}>
+      <Select onValueChange={onValueChange} defaultValue={defaultValue}>
+        <SelectTrigger
+          name={id}
+          className={cn("!ring-[var(--pry-color)]", className)}
+          {...props}
+        >
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>

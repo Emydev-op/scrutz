@@ -9,5 +9,5 @@ export const campaignSchema = Yup.object().shape({
   endDate: Yup.string(),
   digestCampaign: Yup.boolean(),
   linkedKeywords: Yup.array().min(1, "At least one keyword is required"),
-  dailyDigest: Yup.string().required("Select a frequency"),
+  dailyDigest: Yup.string(),
 });

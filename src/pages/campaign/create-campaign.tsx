@@ -37,10 +37,9 @@ export default function CreateCampaign() {
     validationSchema: campaignSchema,
     onSubmit: (values) => {
       console.log(values, "result");
-      // setConfirmModal(true);
+      setConfirmModal(true);
     },
   });
-  console.log(formik.values, "formik");
   return (
     <>
       <form
@@ -150,8 +149,14 @@ export default function CreateCampaign() {
             id="dailyDigest"
             placeholder="Select"
             option={dailyDigestOptions}
+            defaultValue={formik.values.dailyDigest}
+            onValueChange={(e) => formik.setFieldValue("dailyDigest", e)}
             label="Kindly select how often you want to receive daily digest"
-            error=""
+            error={
+              formik.errors.dailyDigest && formik.touched.dailyDigest
+                ? formik.errors.dailyDigest
+                : ""
+            }
           />
         </div>
         <div className="space-x-6 mt-0.5 mb-8 select-none">
