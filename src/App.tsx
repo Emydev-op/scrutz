@@ -3,11 +3,14 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { RootLayout } from "./layouts";
 import ErrorPage from "./error/error-page";
 import { Overview } from "./pages/overview";
-import AllCampaign from "./pages/campaign/all-campaign";
-import Settings from "./pages/settings/settings";
-import CreateCampaign from "./pages/campaign/create-campaign";
 import MarketIntelligence from "./pages/market/market-intelligence";
-import CampaignId from "./pages/campaign/campaign-id";
+import Settings from "./pages/settings/settings";
+import {
+  AllCampaign,
+  CampaignId,
+  CreateCampaign,
+  EditCampaign,
+} from "./pages/campaign";
 
 const router = createBrowserRouter([
   {
@@ -30,9 +33,20 @@ const router = createBrowserRouter([
             id: "all",
           },
           {
-            element: <CampaignId />,
             path: ":id",
             id: "campaignId",
+            children: [
+              {
+                element: <CampaignId />,
+                index: true,
+                id: "view",
+              },
+              {
+                element: <EditCampaign />,
+                path: "edit",
+                id: "edit",
+              },
+            ],
           },
           {
             element: <CreateCampaign />,

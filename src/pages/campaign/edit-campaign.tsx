@@ -7,13 +7,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-import { routes } from "@/utlis/routes";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-export default function CreateCampaign() {
+export default function EditCampaign() {
   const [selected, setSelected] = useState(["papaya"]);
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
+  const navigate = useNavigate();
   const dailyDigestOptions = [
     { label: "daily", value: "daily" },
     { label: "weekly", value: "weekly" },
@@ -24,7 +24,7 @@ export default function CreateCampaign() {
     <>
       <div className="px-4 md:px-10 md:ml-5 py-6 ">
         <h2 className="text-xl font-bold text-[var(--pry-color)]">
-          Create New Campaign
+          Edit Campaign
         </h2>
         <div className="bg-white mt-4 pb-2.5 mb-10 max-w-[680px] space-y-6">
           <Input
@@ -87,21 +87,25 @@ export default function CreateCampaign() {
             error=""
           />
         </div>
-        <div className="space-x-6 mt-0.5 mb-8 select-none">
-          <Link to={routes.CAMPAIGN}>
+        <div className="space-x-6 mt-0.5 mb-8">
+          <span
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
             <Button
               variant="outline"
+              type="button"
               className="font-semibold text-sm bg-transparent rounded w-[130px] md:w-[196px] h-10 hover:bg-transparent hover:border-[var(--pry-color)]"
             >
               Cancel
             </Button>
-          </Link>
+          </span>
           <Button
             type="submit"
-            onClick={() => setConfirmModal(true)}
             className="font-semibold text-sm rounded w-[130px] md:w-[196px] h-10"
           >
-            Create Campaign
+            Edit Campaign
           </Button>
         </div>
       </div>

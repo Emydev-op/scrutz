@@ -61,3 +61,11 @@
     border-color: #247B7B !important;
     box-shadow: #247B7B 0px 0px 0px 1px !important;
 }
+
+.custom-shadow-destructive {
+    box-shadow: 0px 5px 15px 0px #D0810A26;
+}
+
+.custom-shadow-base {
+    box-shadow: 0px 5px 15px 0px #247B7B26;
+}

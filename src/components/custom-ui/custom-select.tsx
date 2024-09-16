@@ -17,6 +17,7 @@ export interface SelectProps {
   label?: string;
   error?: string;
   className?: string;
+  disabled?: boolean;
   option?: { label: string; value: string }[];
 }
 
