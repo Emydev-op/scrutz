@@ -213,7 +213,7 @@ export const columns: ColumnDef<Payment>[] = [
   {
     id: "id",
     header: () => <p className="font-xs font-bold">S/N</p>,
-    cell: ({ row }) => `${Number(row.id) + 1 }.`,
+    cell: ({ row }) => `${Number(row.id) + 1}.`,
     enableSorting: false,
     enableHiding: false,
   },
@@ -313,20 +313,47 @@ export function CustomTable() {
         /> */}
         <div className="inline-flex gap-x-4">
           <Button
-            variant="outline"
-            className="bg-transparent text-sm font-medium rounded !p-2.5"
+            variant={
+              (table
+                .getColumn("campaignStatus")
+                ?.getFilterValue() as string) === undefined
+                ? "default"
+                : "outline"
+            }
+            onClick={() =>
+              table.getColumn("campaignStatus")?.setFilterValue("")
+            }
+            className={cn("text-sm font-medium rounded !p-2.5")}
           >
             All (90)
           </Button>
           <Button
-            variant="outline"
-            className="bg-transparent text-sm font-medium rounded !p-2.5"
+            variant={
+              (table
+                .getColumn("campaignStatus")
+                ?.getFilterValue() as string) === "Inactive"
+                ? "default"
+                : "outline"
+            }
+            onClick={() =>
+              table.getColumn("campaignStatus")?.setFilterValue("Inactive")
+            }
+            className={cn("text-sm font-medium rounded !p-2.5")}
           >
             Inactive (4)
           </Button>
           <Button
-            variant="outline"
-            className="bg-transparent text-sm font-medium rounded !p-2.5"
+            variant={
+              (table
+                .getColumn("campaignStatus")
+                ?.getFilterValue() as string) === "Active"
+                ? "default"
+                : "outline"
+            }
+            onClick={() =>
+              table.getColumn("campaignStatus")?.setFilterValue("Active")
+            }
+            className={cn("text-sm font-medium rounded !p-2.5")}
           >
             Active (86)
           </Button>
@@ -337,6 +364,15 @@ export function CustomTable() {
               id="search"
               type="search"
               placeholder="Search..."
+              value={
+                (table.getColumn("campaignName")?.getFilterValue() as string) ??
+                ""
+              }
+              onChange={(event) =>
+                table
+                  .getColumn("campaignName")
+                  ?.setFilterValue(event.target.value)
+              }
               className="!w-[240px] !h-[44px] focus-visible:ring-0 rounded bg-transparent pl-[10px] border-[var(--text-color3)]"
             />
             <Search className="absolute right-2.5 top-1/2 transform -translate-x-1/2 -translate-y-1/2 cursor-pointer size-4 text-muted-foreground" />
@@ -345,7 +381,7 @@ export function CustomTable() {
             <DropdownMenuTrigger asChild>
               <Button
                 variant="outline"
-                className="ml-auto !w-[190px] bg-transparent text-[var(--text-color3)] border-[var(--text-color3)] hover:border-[var(--text-color3)] rounded !h-[44px] "
+                className="ml-auto !w-[190px] bg-transparent text-[var(--text-color3)] border-[var(--text-color3)] justify-between hover:border-[var(--text-color3)] rounded !h-[44px] "
               >
                 Filter by date <ChevronDownIcon className="ml-2 h-4 w-4" />
               </Button>
@@ -372,6 +408,7 @@ export function CustomTable() {
           </DropdownMenu>
         </div>
       </div>
+
       <div className="rounded-md border">
         <Table>
           <TableHeader className="">
