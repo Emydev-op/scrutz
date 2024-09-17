@@ -48,163 +48,8 @@ import { Link } from "react-router-dom";
 import { routes } from "@/utlis/routes";
 import ConfirmModal from "./confirm-modal";
 import { Search } from "lucide-react";
-
-// const data: CampaignProp[] = [
-//   {
-//     id: 667,
-//     campaignName: "obinna campaign",
-//     campaignDescription: "obinna campaign",
-//     startDate: "2008-12-09T22:29:52.767",
-//     endDate: "2016-11-05T22:29:52.767",
-//     digestCampaign: "No",
-//     linkedKeywords: ["obi", "nna"],
-//     dailyDigest: "daily",
-//     campaignStatus: "Inactive",
-//   },
-//   {
-//     id: 668,
-//     campaignName: "michael opara",
-//     campaignDescription: "obinna campaign",
-//     startDate: "2008-12-09T22:29:53.874",
-//     endDate: "2016-11-05T22:29:53.875",
-//     digestCampaign: "No",
-//     linkedKeywords: ["obi", "nna"],
-//     dailyDigest: "daily",
-//     campaignStatus: "Active",
-//   },
-//   {
-//     id: 669,
-//     campaignName: "samson david",
-//     campaignDescription: "obinna campaign",
-//     startDate: "2008-12-09T22:29:54.093",
-//     endDate: "2016-11-05T22:29:54.093",
-//     digestCampaign: "No",
-//     linkedKeywords: ["obi", "nna"],
-//     dailyDigest: "daily",
-//     campaignStatus: "Inactive",
-//   },
-//   {
-//     id: 670,
-//     campaignName: "Somto Clark",
-//     campaignDescription: "obinna campaign",
-//     startDate: "2008-12-09T22:29:54.77",
-//     endDate: "2016-11-05T22:29:54.77",
-//     digestCampaign: "No",
-//     linkedKeywords: ["obi", "nna"],
-//     dailyDigest: "daily",
-//     campaignStatus: "Active",
-//   },
-//   {
-//     id: 672,
-//     campaignName: "Martins Xavi",
-//     campaignDescription: "obinna campaign",
-//     startDate: "2008-12-09T22:29:55.238",
-//     endDate: "2016-11-05T22:29:55.238",
-//     digestCampaign: "No",
-//     linkedKeywords: ["obi", "nna"],
-//     dailyDigest: "daily",
-//     campaignStatus: "Inactive",
-//   },
-//   {
-//     id: 673,
-//     campaignName: "Dark Charles",
-//     campaignDescription: "obinna campaign",
-//     startDate: "2008-12-09T22:29:55.955",
-//     endDate: "2016-11-05T22:29:55.956",
-//     digestCampaign: "No",
-//     linkedKeywords: ["obi", "nna"],
-//     dailyDigest: "daily",
-//     campaignStatus: "Inactive",
-//   },
-//   {
-//     id: 674,
-//     campaignName: "Ugo Zander",
-//     campaignDescription: "obinna campaign",
-//     startDate: "2008-12-09T22:29:56.635",
-//     endDate: "2016-11-05T22:29:56.635",
-//     digestCampaign: "No",
-//     linkedKeywords: ["obi", "nna"],
-//     dailyDigest: "daily",
-//     campaignStatus: "Inactive",
-//   },
-//   {
-//     id: 675,
-//     campaignName: "James campaign",
-//     campaignDescription: "obinna campaign",
-//     startDate: "2008-12-09T22:29:56.842",
-//     endDate: "2016-11-05T22:29:56.842",
-//     digestCampaign: "No",
-//     linkedKeywords: ["obi", "nna"],
-//     dailyDigest: "daily",
-//     campaignStatus: "Inactive",
-//   },
-//   {
-//     id: 676,
-//     campaignName: "Kate Lary",
-//     campaignDescription: "obinna campaign",
-//     startDate: "2008-12-09T22:29:57.499",
-//     endDate: "2016-11-05T22:29:57.499",
-//     digestCampaign: "No",
-//     linkedKeywords: ["obi", "nna"],
-//     dailyDigest: "daily",
-//     campaignStatus: "active",
-//   },
-//   {
-//     id: 677,
-//     campaignName: "Nath Haris",
-//     campaignDescription: "obinna campaign",
-//     startDate: "2008-12-09T22:29:57.721",
-//     endDate: "2016-11-05T22:29:57.721",
-//     digestCampaign: "No",
-//     linkedKeywords: ["obi", "nna"],
-//     dailyDigest: "daily",
-//     campaignStatus: "active",
-//   },
-//   {
-//     id: 678,
-//     campaignName: "Drake Samson",
-//     campaignDescription: "obinna campaign",
-//     startDate: "2008-12-09T22:29:58.399",
-//     endDate: "2016-11-05T22:29:58.399",
-//     digestCampaign: "No",
-//     linkedKeywords: ["obi", "nna"],
-//     dailyDigest: "daily",
-//     campaignStatus: "Inactive",
-//   },
-//   {
-//     id: 679,
-//     campaignName: "Lookman Frank",
-//     campaignDescription: "obinna campaign",
-//     startDate: "2008-12-09T22:29:58.643",
-//     endDate: "2016-11-05T22:29:58.644",
-//     digestCampaign: "No",
-//     linkedKeywords: ["obi", "nna"],
-//     dailyDigest: "daily",
-//     campaignStatus: "Inactive",
-//   },
-//   {
-//     id: 680,
-//     campaignName: "Ngozi Daris",
-//     campaignDescription: "obinna campaign",
-//     startDate: "2008-12-09T22:29:58.871",
-//     endDate: "2016-11-05T22:29:58.871",
-//     digestCampaign: "No",
-//     linkedKeywords: ["obi", "nna"],
-//     dailyDigest: "daily",
-//     campaignStatus: "Inactive",
-//   },
-//   {
-//     id: 681,
-//     campaignName: "Dinma Ekene",
-//     campaignDescription: "obinna campaign",
-//     startDate: "2008-12-09T22:29:59.764",
-//     endDate: "2016-11-05T22:29:59.764",
-//     digestCampaign: "No",
-//     linkedKeywords: ["obi", "nna"],
-//     dailyDigest: "daily",
-//     campaignStatus: "Inactive",
-//   },
-// ];
+import { useDeleteCampaign } from "@/store/api-service";
+import { mutate } from "swr";
 
 export type CampaignProp = {
   id?: number;
@@ -510,12 +355,19 @@ function ActionButton({ row }: { row: Row<CampaignProp> }) {
   const rowData = row.original;
   const [cancelCampaignModal, setCancelCampaignModal] =
     React.useState<boolean>(false);
+  const { deleteCampaign, isDeleting } = useDeleteCampaign(rowData.id ?? "");
   return (
     <div className="inline-flex gap-x-6 items-center">
-      <Link to={routes.VIEW_CAMPAIGN(rowData.id ?? "")} className="cursor-pointer">
+      <Link
+        to={routes.VIEW_CAMPAIGN(rowData.id ?? "")}
+        className="cursor-pointer"
+      >
         <img src={EyeIcon} alt="eye icon" />
       </Link>
-      <Link to={routes.EDIT_CAMPAIGN(rowData.id ?? "")} className="cursor-pointer">
+      <Link
+        to={routes.EDIT_CAMPAIGN(rowData.id ?? "")}
+        className="cursor-pointer"
+      >
         <img src={EditIcon} alt="eye icon" />
       </Link>
       <span
@@ -527,10 +379,14 @@ function ActionButton({ row }: { row: Row<CampaignProp> }) {
       <ConfirmModal
         show={cancelCampaignModal}
         title="Stop Campaign"
-        desc="Microsoft campaign"
+        desc={`${rowData.campaignName} campaign`}
         handleClose={() => setCancelCampaignModal(false)}
+        loading={isDeleting}
         handleConfirm={() => {
-          setCancelCampaignModal(false);
+          deleteCampaign().then(() => {
+            mutate("/api/Campaign");
+            setCancelCampaignModal(false);
+          });
         }}
       />
     </div>

@@ -30,8 +30,8 @@ export const useFetchCampaignById = (id: string) => {
     id ? `/api/Campaign/${id}` : null,
     fetcher,
     {
-      // revalidateOnFocus: false,
-      // revalidateOnReconnect: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
       revalidateIfStale: false,
       // revalidateOnMount: false,
     }
@@ -55,7 +55,7 @@ export const useFetchCampaignById = (id: string) => {
 export const useCreateCampaign = () => {
   const { trigger, isMutating, error, data } = useSWRMutation(
     "/api/Campaign",
-    async (url, { arg }:{arg:never}) => {
+    async (url, { arg }) => {
       const response = await axiosInstance.post(url, arg);
       return response.data;
     },
@@ -123,7 +123,7 @@ export const useUpdateCampaign = (id: string) => {
   };
 };
 
-export const useDeleteCampaign = (id: string) => {
+export const useDeleteCampaign = (id: string | number) => {
   const { trigger, data, isMutating, error } = useSWRMutation(
     id ? `/api/Campaign/${id}` : null,
     async (url) => {
@@ -134,6 +134,7 @@ export const useDeleteCampaign = (id: string) => {
       onError: (err) => {
         toast.error(err?.message ?? "Unable to end campaign");
       },
+      revalidate: false,
     }
   );
 
