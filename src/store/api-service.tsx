@@ -4,6 +4,7 @@ import { axiosInstance, fetcher } from "./axios-instance";
 import { CampaignProp } from "@/components/custom-ui/custom-table";
 import useLoadingStore from "./loadingStore";
 import { toast } from "sonner";
+import { CampaignFormProp } from "@/pages/campaign/edit-campaign";
 
 export const useFetchCampaigns = () => {
   const { data, error, isLoading, isValidating, mutate } = useSWR<
@@ -49,7 +50,7 @@ export const useFetchCampaignById = (id: string) => {
 export const useCreateCampaign = () => {
   const { trigger, isMutating, error, data } = useSWRMutation(
     "/api/Campaign",
-    async (url, { arg }) => {
+    async (url: string, { arg }: { arg: CampaignFormProp }) => {
       const response = await axiosInstance.post(url, arg);
       return response.data;
     },
@@ -84,7 +85,7 @@ export const useCreateCampaign = () => {
 export const useUpdateCampaign = (id: string) => {
   const { trigger, isMutating, error, data } = useSWRMutation(
     `/api/Campaign/${id}`,
-    async (url: string, { arg }: { arg: CampaignProp }) => {
+    async (url: string, { arg }: { arg: CampaignFormProp }) => {
       const response = await axiosInstance.put(url, arg);
       return response.data;
     },

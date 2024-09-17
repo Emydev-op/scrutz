@@ -15,7 +15,7 @@ import { campaignSchema } from "@/lib/schema";
 import { useFetchCampaignById, useUpdateCampaign } from "@/store/api-service";
 import { toast } from "sonner";
 
-type CampaignProp = {
+export type CampaignFormProp = {
   startDate: string;
   campaignName: string;
   campaignDescription: string;
@@ -42,13 +42,13 @@ export default function EditCampaign() {
   // update current campaign hook
   const { updateCampaign } = useUpdateCampaign(id ?? "");
 
-  const handleSubmit = (values: CampaignProp) => {
-    updateCampaign({arg: values}).then(() => {
+  const handleSubmit = (values: CampaignFormProp) => {
+    updateCampaign(values).then(() => {
       setConfirmModal(true);
     });
   };
 
-  const formik = useFormik<CampaignProp>({
+  const formik = useFormik<CampaignFormProp>({
     initialValues: {
       campaignName: "",
       campaignDescription: "",

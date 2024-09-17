@@ -13,6 +13,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { campaignSchema } from "@/lib/schema";
 import { useCreateCampaign } from "@/store/api-service";
+import { CampaignFormProp } from "./edit-campaign";
 // import { formatDate } from "@/utlis/date-formater";
 
 export default function CreateCampaign() {
@@ -28,11 +29,11 @@ export default function CreateCampaign() {
   // create campaign hook
   const { createCampaign } = useCreateCampaign();
 
-  // const handleSubmit = (values) => {
-  //   createCampaign(values).then(() => {
-  //     setConfirmModal(true);
-  //   });
-  // };
+  const handleSubmit = (values: CampaignFormProp) => {
+    createCampaign(values).then(() => {
+      setConfirmModal(true);
+    });
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -45,11 +46,7 @@ export default function CreateCampaign() {
       dailyDigest: "",
     },
     validationSchema: campaignSchema,
-    onSubmit: (values) => {
-      createCampaign(values).then(() => {
-        setConfirmModal(true);
-      });
-    },
+    onSubmit: handleSubmit,
   });
   return (
     <>
