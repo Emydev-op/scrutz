@@ -23,7 +23,7 @@ export default function CampaignId() {
   const [confirmCampaignModal, setConfirmCampaignModal] =
     useState<boolean>(false);
   // Delete campaign hook
-  const { deleteCampaign, isDeleting, deletedRes } = useDeleteCampaign(
+  const { deleteCampaign, isDeleting } = useDeleteCampaign(
     id ?? ""
   );
   // Fetch current campaign hook
@@ -41,9 +41,10 @@ export default function CampaignId() {
   }
 
   const handleConfirm = async () => {
-    await setConfirmCampaignModal(false);
-    navigate(routes.CAMPAIGN);
-    mutate("/api/Campaign");
+    deleteCampaign().then(() => {
+      setConfirmCampaignModal(true);
+      setCancelCampaignModal(false);
+    });
   };
 
   return (
@@ -151,20 +152,18 @@ export default function CampaignId() {
         desc={`${name} campaign`}
         handleClose={() => setCancelCampaignModal(false)}
         loading={isDeleting}
-        handleConfirm={() => {
-          deleteCampaign();
-          if (deletedRes) {
-            setConfirmCampaignModal(true);
-            setCancelCampaignModal(false);
-          }
-        }}
+        handleConfirm={handleConfirm}
       />
       <DeletedConfirmModal
         show={confirmCampaignModal}
         title="Campaign Deleted"
         desc={`${name} campaign has been deleted`}
         handleClose={() => setConfirmCampaignModal(false)}
-        handleConfirm={handleConfirm}
+        handleConfirm={async () => {
+          await navigate(routes.CAMPAIGN);
+          await setConfirmCampaignModal(false);
+          mutate("/api/Campaign");
+        }}
       />
     </div>
   );

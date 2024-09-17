@@ -30,9 +30,9 @@ export const useFetchCampaignById = (id: string) => {
     id ? `/api/Campaign/${id}` : null,
     fetcher,
     {
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-      // revalidateIfStale: false,
+      // revalidateOnFocus: false,
+      // revalidateOnReconnect: false,
+      revalidateIfStale: false,
       // revalidateOnMount: false,
     }
   );
@@ -55,7 +55,7 @@ export const useFetchCampaignById = (id: string) => {
 export const useCreateCampaign = () => {
   const { trigger, isMutating, error, data } = useSWRMutation(
     "/api/Campaign",
-    async (url, { arg }) => {
+    async (url, { arg }:{arg:never}) => {
       const response = await axiosInstance.post(url, arg);
       return response.data;
     },

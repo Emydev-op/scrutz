@@ -9,9 +9,6 @@ export default function ErrorPage() {
       <img src="/empty.png" alt="" className="w-[426px] h-[290px] mx-auto" />
       <h1>Oops!</h1>
       <p>Sorry, an unexpected error has occurred.</p>
-      <p>
-        <i>{error.error.message || error.statusText || error.data}</i>
-      </p>
     </div>
   );
 }

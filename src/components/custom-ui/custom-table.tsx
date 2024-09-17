@@ -207,7 +207,7 @@ import { Search } from "lucide-react";
 // ];
 
 export type CampaignProp = {
-  id: number;
+  id?: number;
   startDate: string;
   campaignStatus: "Inactive" | "active" | "Active";
   campaignName: string;
@@ -512,10 +512,10 @@ function ActionButton({ row }: { row: Row<CampaignProp> }) {
     React.useState<boolean>(false);
   return (
     <div className="inline-flex gap-x-6 items-center">
-      <Link to={routes.VIEW_CAMPAIGN(rowData.id)} className="cursor-pointer">
+      <Link to={routes.VIEW_CAMPAIGN(rowData.id ?? "")} className="cursor-pointer">
         <img src={EyeIcon} alt="eye icon" />
       </Link>
-      <Link to={routes.EDIT_CAMPAIGN(rowData.id)} className="cursor-pointer">
+      <Link to={routes.EDIT_CAMPAIGN(rowData.id ?? "")} className="cursor-pointer">
         <img src={EditIcon} alt="eye icon" />
       </Link>
       <span
