@@ -28,13 +28,7 @@ export const useFetchCampaigns = () => {
 export const useFetchCampaignById = (id: string) => {
   const { data, error, isLoading, isValidating, mutate } = useSWR<CampaignProp>(
     id ? `/api/Campaign/${id}` : null,
-    fetcher,
-    {
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-      revalidateIfStale: false,
-      // revalidateOnMount: false,
-    }
+    fetcher
   );
   const showLoading = useLoadingStore((state) => state.showLoading);
   const hideLoading = useLoadingStore((state) => state.hideLoading);
@@ -88,9 +82,9 @@ export const useCreateCampaign = () => {
 };
 
 export const useUpdateCampaign = (id: string) => {
-  const { trigger, isMutating, error, data } = useSWRMutation<CampaignProp>(
-    id ? `/api/Campaign/${id}` : null,
-    async (url: string, { arg }: { arg?: unknown }) => {
+  const { trigger, isMutating, error, data } = useSWRMutation(
+    `/api/Campaign/${id}`,
+    async (url: string, { arg }: { arg: CampaignProp }) => {
       const response = await axiosInstance.put(url, arg);
       return response.data;
     },

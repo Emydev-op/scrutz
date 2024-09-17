@@ -14,7 +14,6 @@ import { useFormik } from "formik";
 import { campaignSchema } from "@/lib/schema";
 import { useFetchCampaignById, useUpdateCampaign } from "@/store/api-service";
 import { toast } from "sonner";
-// import { formatDate } from "@/utlis/date-formater";
 
 type CampaignProp = {
   startDate: string;
@@ -27,7 +26,7 @@ type CampaignProp = {
 };
 
 export default function EditCampaign() {
- const navigate = useNavigate();
+  const navigate = useNavigate();
   const { id } = useParams();
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
   const dailyDigestOptions = [
@@ -41,16 +40,14 @@ export default function EditCampaign() {
   const { campaigns, isError } = useFetchCampaignById(id ?? "");
 
   // update current campaign hook
-  const { updateCampaign } = useUpdateCampaign(
-    id ?? ""
-  );
+  const { updateCampaign } = useUpdateCampaign(id ?? "");
 
-  const handleSubmit = async (values ) => {
-    updateCampaign(values).then(() => {
+  const handleSubmit = (values: CampaignProp) => {
+    updateCampaign({arg: values}).then(() => {
       setConfirmModal(true);
     });
   };
-  
+
   const formik = useFormik<CampaignProp>({
     initialValues: {
       campaignName: "",
