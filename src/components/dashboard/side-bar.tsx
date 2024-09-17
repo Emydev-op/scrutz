@@ -65,7 +65,7 @@ export default function SideBar() {
               We’re readily available to provide help
             </p>
             <Button
-              className="font-semibold text-sm !px-6 !py-2 !mt-3 hover:text-[var(--pry-color)] hover:border-base/25 hover:bg-transparent"
+              className="font-semibold text-sm !px-6 !py-2 !mt-3 hover:text-[var(--pry-color)] hover:border-[var(--pry-color)] hover:bg-transparent"
               variant="outline"
             >
               Get help

@@ -4,7 +4,7 @@ import "react-multi-date-picker/styles/layouts/mobile.css";
 import "react-multi-date-picker/styles/colors/teal.css";
 import { CalenderIcon } from "@/assets/icons";
 
-interface CustomDateInputProps {
+export interface CustomDateInputProps {
   label?: string;
   id: string;
   name?: string;
@@ -12,6 +12,7 @@ interface CustomDateInputProps {
   className?: string;
   onOpenPickNewDate?: boolean;
   isRequired?: boolean;
+  value?: string[];
   handleChange?: (arg: never) => void;
   selected?: Date | string;
   error?: string;

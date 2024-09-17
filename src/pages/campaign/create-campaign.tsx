@@ -14,7 +14,6 @@ import { useFormik } from "formik";
 import { campaignSchema } from "@/lib/schema";
 import { useCreateCampaign } from "@/store/api-service";
 import { CampaignFormProp } from "./edit-campaign";
-// import { formatDate } from "@/utlis/date-formater";
 
 export default function CreateCampaign() {
   const navigate = useNavigate();

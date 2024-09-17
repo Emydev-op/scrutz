@@ -1,4 +1,5 @@
 import { ExportIcon, PlusIcon } from "@/assets/icons";
+import { CustomDateRangePicker } from "@/components/custom-ui/custom-date-range-picker";
 import { Button } from "@/components/ui/button";
 import { routes } from "@/utlis/routes";
 import { Link } from "react-router-dom";
@@ -11,7 +12,14 @@ export default function Overview() {
           <h3 className="capitalize font-bold text-2xl text-[var(--pry-color)]">
             overview
           </h3>
-          <div className="">
+          <div className="inline-flex space-x-4">
+            <CustomDateRangePicker
+              id="startDate"
+              name="startDate"
+              isRequired
+              format="YYYY/MM/DD"
+              inputClass="bg-[var(--bg-color2)]"
+            />
             <Button className="text-[var(--pry-color)] bg-[var(--bg-color)] !py-3 px-7 shadow-none rounded hover:bg-[var(--bg-color)] hover:border-transparent hover:shadow ">
               <img src={ExportIcon} alt="" className="mr-2" /> Export
             </Button>
