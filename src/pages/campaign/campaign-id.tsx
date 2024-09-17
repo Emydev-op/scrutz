@@ -6,19 +6,52 @@ import DeletedConfirmModal from "@/components/custom-ui/deleted-confirm-modal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { useDeleteCampaign, useFetchCampaignById } from "@/store/api-service";
+import { formatDate } from "@/utlis/date-formater";
 import { routes } from "@/utlis/routes";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { toast } from "sonner";
+import { mutate } from "swr";
 
 export default function CampaignId() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [name, setName] = useState("");
   const [cancelCampaignModal, setCancelCampaignModal] =
     useState<boolean>(false);
   const [confirmCampaignModal, setConfirmCampaignModal] =
     useState<boolean>(false);
-    const navigate = useNavigate()
+  // Delete campaign hook
+  const { deleteCampaign, isDeleting, deletedRes } = useDeleteCampaign(
+    id ?? ""
+  );
+  // Fetch current campaign hook
+  const { campaigns, isError } = useFetchCampaignById(id ?? "");
+
+  useEffect(() => {
+    if (campaigns?.campaignName) {
+      setName(campaigns.campaignName);
+    }
+  }, [campaigns]);
+
+  if (isError) {
+    toast.error(isError?.response?.data ?? "Unable to fetch campaign");
+    return null;
+  }
+
+  const handleConfirm = async () => {
+    await setConfirmCampaignModal(false);
+    navigate(routes.CAMPAIGN);
+    mutate("/api/Campaign");
+  };
+
   return (
     <div className="px-4 md:px-10 md:ml-5 py-6 ">
-      <div className="inline-flex items-center group">
+      <div
+        className="inline-flex items-center group"
+        onClick={() => navigate(-1)}
+      >
         <img
           src={ArrowLeftIcon}
           alt="arrow back icon"
@@ -35,7 +68,15 @@ export default function CampaignId() {
           <p className="border-r-[1.5px] pr-2 mr-4 border-[var(--text-color3)]">
             Campaign Status
           </p>
-          <p className={cn("text-[var(--success-color)]")}>Active</p>
+          <p
+            className={cn(
+              campaigns?.campaignStatus === "Inactive"
+                ? "text-[var(--error-color)]"
+                : "text-[var(--success-color)]"
+            )}
+          >
+            {campaigns?.campaignStatus ?? ""}
+          </p>
         </div>
       </header>
 
@@ -44,16 +85,26 @@ export default function CampaignId() {
           label="Campaign Name"
           disabled
           type="text"
-          value="Fidelity Bank"
+          value={campaigns?.campaignName ?? ""}
         />
         <div className="flex gap-x-6 w-full">
-          <Input label="Start Date" disabled type="text" value="27/10/2022" />{" "}
-          <Input label="End Date" disabled type="text" value="07/12/2024" />
+          <Input
+            label="Start Date"
+            disabled
+            type="text"
+            value={formatDate(campaigns?.startDate ?? "")}
+          />{" "}
+          <Input
+            label="End Date"
+            disabled
+            type="text"
+            value={formatDate(campaigns?.endDate ?? "")}
+          />
         </div>
         <CustomTagInput
           id="linkedKeywords"
           disabled
-          value={["papaya", "father", "samson"]}
+          value={campaigns?.linkedKeywords ?? []}
           label="Linked Keywords"
           error=""
           classNames={{
@@ -65,14 +116,14 @@ export default function CampaignId() {
         <CustomSelect
           className="w-full shadow-none rounded min-h-10 focus-visible:ring-0 hover:border-[var(--text-color3)] border-[var(--text-color3)] capitalize text-[var(--text-color2)]"
           id="dailyDigest"
-          placeholder="yes"
           label="Want to receive daily digest about the campaign?"
           disabled
+          placeholder={campaigns?.digestCampaign ?? ""}
         />
         <CustomSelect
           className="w-full shadow-none rounded min-h-10 focus-visible:ring-0 hover:border-[var(--text-color3)] border-[var(--text-color3)] capitalize text-[var(--text-color2)]"
           id="dailyDigest"
-          placeholder="monthly"
+          placeholder={campaigns?.dailyDigest ?? ""}
           label="Kindly select the time you want tio receive daily digest"
           disabled
         />
@@ -85,7 +136,7 @@ export default function CampaignId() {
         >
           Stop Campaign
         </Button>
-        <Link to={routes.EDIT_CAMPAIGN(12)}>
+        <Link to={routes.EDIT_CAMPAIGN(Number(id))}>
           <Button
             variant="outline"
             className="font-semibold text-sm bg-transparent rounded w-[130px] md:w-[196px] h-10 hover:bg-transparent hover:border-[var(--pry-color)]"
@@ -97,22 +148,23 @@ export default function CampaignId() {
       <ConfirmModal
         show={cancelCampaignModal}
         title="Stop Campaign"
-        desc="Microsoft campaign"
+        desc={`${name} campaign`}
         handleClose={() => setCancelCampaignModal(false)}
+        loading={isDeleting}
         handleConfirm={() => {
-          setConfirmCampaignModal(true);
-          setCancelCampaignModal(false);
+          deleteCampaign();
+          if (deletedRes) {
+            setConfirmCampaignModal(true);
+            setCancelCampaignModal(false);
+          }
         }}
       />
       <DeletedConfirmModal
         show={confirmCampaignModal}
         title="Campaign Deleted"
-        desc="MTN campaign has been deleted"
+        desc={`${name} campaign has been deleted`}
         handleClose={() => setConfirmCampaignModal(false)}
-        handleConfirm={() => {
-          setConfirmCampaignModal(false);
-          navigate(routes.CAMPAIGN)
-        }}
+        handleConfirm={handleConfirm}
       />
     </div>
   );

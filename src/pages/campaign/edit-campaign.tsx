@@ -8,14 +8,27 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { routes } from "@/utlis/routes";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import { campaignSchema } from "@/lib/schema";
+import { useFetchCampaignById, useUpdateCampaign } from "@/store/api-service";
+import { toast } from "sonner";
 // import { formatDate } from "@/utlis/date-formater";
 
+type CampaignProp = {
+  startDate: string;
+  campaignName: string;
+  campaignDescription: string;
+  endDate: string;
+  digestCampaign: boolean;
+  linkedKeywords: string[];
+  dailyDigest: string;
+};
+
 export default function EditCampaign() {
-  const navigate = useNavigate();
+ const navigate = useNavigate();
+  const { id } = useParams();
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
   const dailyDigestOptions = [
     { label: "daily", value: "daily" },
@@ -24,7 +37,21 @@ export default function EditCampaign() {
     { label: "quaterly", value: "quaterly" },
   ];
 
-  const formik = useFormik({
+  // Fetch current campaign hook
+  const { campaigns, isError } = useFetchCampaignById(id ?? "");
+
+  // update current campaign hook
+  const { updateCampaign } = useUpdateCampaign(
+    id ?? ""
+  );
+
+  const handleSubmit = async (values: CampaignProp) => {
+    updateCampaign(values).then(() => {
+      setConfirmModal(true);
+    });
+  };
+  
+  const formik = useFormik<CampaignProp>({
     initialValues: {
       campaignName: "",
       campaignDescription: "",
@@ -36,11 +63,28 @@ export default function EditCampaign() {
     },
     enableReinitialize: true,
     validationSchema: campaignSchema,
-    onSubmit: (values) => {
-      console.log(values, "result");
-      setConfirmModal(true);
-    },
+    onSubmit: handleSubmit,
   });
+
+  useEffect(() => {
+    formik.setValues({
+      campaignName: campaigns?.campaignName || "",
+      campaignDescription: campaigns?.campaignDescription || "",
+      startDate: campaigns?.startDate || "",
+      endDate: campaigns?.endDate || "",
+      digestCampaign:
+        (campaigns?.digestCampaign.toLowerCase() === "yes" ? true : false) ||
+        false,
+      linkedKeywords: campaigns?.linkedKeywords || [],
+      dailyDigest: campaigns?.dailyDigest || "",
+    });
+    formik.setFieldValue("id", Number(id));
+  }, [campaigns]);
+
+  if (isError) {
+    toast.error(isError?.response?.data || "Unable to fetch campaign");
+  }
+
   return (
     <>
       <form
@@ -150,7 +194,7 @@ export default function EditCampaign() {
             id="dailyDigest"
             placeholder="Select"
             option={dailyDigestOptions}
-            defaultValue={formik.values.dailyDigest}
+            value={formik?.values?.dailyDigest}
             onValueChange={(e) => formik.setFieldValue("dailyDigest", e)}
             label="Kindly select how often you want to receive daily digest"
             error={

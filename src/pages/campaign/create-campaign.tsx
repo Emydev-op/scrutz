@@ -12,6 +12,8 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { campaignSchema } from "@/lib/schema";
+import { CampaignProp } from "@/components/custom-ui/custom-table";
+import { useCreateCampaign } from "@/store/api-service";
 // import { formatDate } from "@/utlis/date-formater";
 
 export default function CreateCampaign() {
@@ -24,6 +26,15 @@ export default function CreateCampaign() {
     { label: "quaterly", value: "quaterly" },
   ];
 
+  // create campaign hook
+  const { createCampaign } = useCreateCampaign();
+
+  const handleSubmit = async (values: CampaignProp) => {
+    createCampaign(values).then(() => {
+      setConfirmModal(true);
+    });
+  };
+
   const formik = useFormik({
     initialValues: {
       campaignName: "",
@@ -35,10 +46,7 @@ export default function CreateCampaign() {
       dailyDigest: "",
     },
     validationSchema: campaignSchema,
-    onSubmit: (values) => {
-      console.log(values, "result");
-      setConfirmModal(true);
-    },
+    onSubmit: handleSubmit,
   });
   return (
     <>

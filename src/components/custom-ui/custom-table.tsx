@@ -49,7 +49,7 @@ import { routes } from "@/utlis/routes";
 import ConfirmModal from "./confirm-modal";
 import { Search } from "lucide-react";
 
-// const data: Payment[] = [
+// const data: CampaignProp[] = [
 //   {
 //     id: 667,
 //     campaignName: "obinna campaign",
@@ -206,7 +206,7 @@ import { Search } from "lucide-react";
 //   },
 // ];
 
-export type Payment = {
+export type CampaignProp = {
   id: number;
   startDate: string;
   campaignStatus: "Inactive" | "active" | "Active";
@@ -218,7 +218,7 @@ export type Payment = {
   dailyDigest: string;
 };
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<CampaignProp>[] = [
   {
     id: "id",
     header: () => <p className="font-xs font-bold">S/N</p>,
@@ -281,7 +281,7 @@ export const columns: ColumnDef<Payment>[] = [
   },
 ];
 
-export function CustomTable({ data }: { data: Payment[] }) {
+export function CustomTable({ data }: { data: CampaignProp[] }) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -506,7 +506,7 @@ export function CustomTable({ data }: { data: Payment[] }) {
   );
 }
 
-function ActionButton({ row }: { row: Row<Payment> }) {
+function ActionButton({ row }: { row: Row<CampaignProp> }) {
   const rowData = row.original;
   const [cancelCampaignModal, setCancelCampaignModal] =
     React.useState<boolean>(false);

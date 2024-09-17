@@ -17,6 +17,7 @@ export interface SelectProps {
   label?: string;
   error?: string;
   defaultValue?: string;
+  value?: string;
   onValueChange?: (value: string) => void;
   className?: string;
   disabled?: boolean;
@@ -50,7 +51,11 @@ export default function CustomSelect({
       >
         {label}
       </label>
-      <Select onValueChange={onValueChange} defaultValue={defaultValue}>
+      <Select
+        onValueChange={onValueChange}
+        defaultValue={defaultValue}
+        {...props}
+      >
         <SelectTrigger
           name={id}
           className={cn("!ring-[var(--pry-color)]", className)}

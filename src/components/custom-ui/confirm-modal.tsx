@@ -1,3 +1,4 @@
+import { Loader2 } from "lucide-react";
 import { Button } from "../ui/button";
 import CustomModalContainer, {
   ModalContainerProps,
@@ -8,6 +9,7 @@ interface ConfirmModalProp extends ModalContainerProps {
   handleConfirm: () => void;
   title: string;
   desc: string;
+  loading?: boolean;
 }
 
 export default function ConfirmModal({
@@ -17,6 +19,7 @@ export default function ConfirmModal({
   handleClose,
   modalClass,
   handleConfirm,
+  loading,
 }: ConfirmModalProp) {
   return (
     <CustomModalContainer
@@ -39,6 +42,7 @@ export default function ConfirmModal({
           <Button
             variant="outline"
             onClick={handleClose}
+            disabled={loading}
             className="font-semibold text-xs bg-transparent rounded w-[100px] md:w-[110px] h-10 hover:bg-transparent hover:border-black text-black border-black "
           >
             Cancel
@@ -47,8 +51,10 @@ export default function ConfirmModal({
           <Button
             variant="destructive"
             onClick={handleConfirm}
-            className="font-semibold text-xs rounded w-[100px] md:w-[126px] h-10 custom-shadow-destructive"
+            disabled={loading}
+            className="font-semibold text-xs rounded px-[15.5px] py-3 h-10 custom-shadow-destructive"
           >
+            {loading && <Loader2 className="size-4 animate-spin mr-2" />}
             Delete Campaign
           </Button>
         </div>
